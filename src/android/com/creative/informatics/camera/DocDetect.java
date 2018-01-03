@@ -245,7 +245,7 @@ public class DocDetect extends Activity {
 
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
-
+            String str="";
             if (pictureFile.exists()) {
                 pictureFile.delete();
             }
@@ -351,22 +351,13 @@ public class DocDetect extends Activity {
                         OCRresult1 = mTess.getUTF8Text();
 
                         //Return Result
-                        String str="";
                         if (!(checkString(OCRresult)=="" && checkString(OCRresult1) ==""))
                             str = checkString(OCRresult) + "/" + checkString(OCRresult1);
                         Log.d(TAG,str);
 
-                        JSONObject obj = new JSONObject();
-                        try {
-                            obj.put("data", str);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        Config.request.results.put(obj);
-                        Config.pendingRequests.resolveWithSuccess(Config.request);
 
-                        finish();
                     }
+
                     // mCamera.startPreview();
                 }
                 else {
@@ -378,6 +369,16 @@ public class DocDetect extends Activity {
             } catch (IOException e) {
                 Log.d(TAG, "Error accessing file: " + e.getMessage());
             }
+            JSONObject obj = new JSONObject();
+            try {
+                obj.put("data", str);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Config.request.results.put(obj);
+            Config.pendingRequests.resolveWithSuccess(Config.request);
+
+            finish();
         }
 
 
