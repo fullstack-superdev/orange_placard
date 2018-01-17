@@ -377,7 +377,7 @@ public class DocDetect extends Activity {
             }
             Config.request.results.put(obj);
             Config.pendingRequests.resolveWithSuccess(Config.request);
-
+			mCamera.release();
             finish();
         }
 
